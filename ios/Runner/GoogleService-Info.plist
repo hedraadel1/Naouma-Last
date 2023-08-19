@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>325533563947-hpm3f9rjjpp04bagieicef270tmbq1nq.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.325533563947-hpm3f9rjjpp04bagieicef270tmbq1nq</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBxqP9t-Rl_3XKEnFdqNEVaUOhDwm4Lxko</string>
+	<key>GCM_SENDER_ID</key>
+	<string>325533563947</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.onoo.naouma</string>
+	<key>PROJECT_ID</key>
+	<string>naouma-30072023</string>
+	<key>STORAGE_BUCKET</key>
+	<string>naouma-30072023.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:325533563947:ios:ab512e5de09b644c06fe6e</string>
+</dict>
+</plist>
