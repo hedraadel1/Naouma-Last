@@ -1,3 +1,11 @@
+/*
+ * Copyright (c) 2023. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+ * Morbi non lorem porttitor neque feugiat blandit. Ut vitae ipsum eget quam lacinia accumsan.
+ * Etiam sed turpis ac ipsum condimentum fringilla. Maecenas magna.
+ * Proin dapibus sapien vel ante. Aliquam erat volutpat. Pellentesque sagittis ligula eget metus.
+ * Vestibulum commodo. Ut rhoncus gravida arcu.
+ */
+
 import 'dart:convert';
 import 'dart:io';
 
@@ -12,10 +20,12 @@ class DioHelper {
 
   static init() {
     dio = Dio(BaseOptions(
-        baseUrl: 'https://nauma.onoo.pro/public/api/',
+        baseUrl: 'https://nauma.smartlys.online/public/api/',
         receiveDataWhenStatusError: true));
   }
-final String basse = "https://nauma.onoo.pro/public/api/";
+
+  final String basse = "https://nauma.smartlys.online/public/api/";
+
   static Future<Response> getdata({
     @required String url,
     Map<String, dynamic> query,
@@ -67,75 +77,69 @@ final String basse = "https://nauma.onoo.pro/public/api/";
     return dio.post(url, queryParameters: query ?? null, data: data);
   }
 
-  // static Future<Response> editroom(
-  //     {@required String url,
-  //     Map<String, dynamic> query,
-  //     @required roomname,
-  //     @required roomdesc,
-  //     @required mics,
-  //     @required supervisor,
-  //     @required imageFile,
-  //     @required fileName,
-  //     String token}) async {
-  //   // Blob blob = new Blob(imageFile.readAsBytesSync());
-  //   // var multipartFilee = await MultipartFile.fromFile(imageFile.path,
-  //   //     filename: fileName, contentType: MediaType('image', fileName));
-  //   // FormData formData = FormData.fromMap({
-  //   //   "name": roomname,
-  //   //   "room_desc": roomdesc,
-  //   //   "countMics": mics,
-  //   //   "supervisor_lockmic_access": supervisor,
-  //   //   'room_background': multipartFilee
-  //   // });
+// static Future<Response> editroom(
+//     {@required String url,
+//     Map<String, dynamic> query,
+//     @required roomname,
+//     @required roomdesc,
+//     @required mics,
+//     @required supervisor,
+//     @required imageFile,
+//     @required fileName,
+//     String token}) async {
+//   // Blob blob = new Blob(imageFile.readAsBytesSync());
+//   // var multipartFilee = await MultipartFile.fromFile(imageFile.path,
+//   //     filename: fileName, contentType: MediaType('image', fileName));
+//   // FormData formData = FormData.fromMap({
+//   //   "name": roomname,
+//   //   "room_desc": roomdesc,
+//   //   "countMics": mics,
+//   //   "supervisor_lockmic_access": supervisor,
+//   //   'room_background': multipartFilee
+//   // });
 
-  //   print(roomname);
-  //   print(roomdesc);
-  //   print(mics);
+//   print(roomname);
+//   print(roomdesc);
+//   print(mics);
 
-  //   print(supervisor);
+//   print(supervisor);
 
-  //   print(imageFile);
+//   print(imageFile);
 
-  //   print(fileName);
+//   print(fileName);
 
-  //   var formData = FormData.fromMap({
-  //     "name": roomname,
-  //     "room_desc": roomdesc,
-  //     "countMics": mics,
-  //     "supervisor_lockmic_access": supervisor,
-  //     "room_background": image != null
-  //         ? await MultipartFile.fromFile(
-  //             imageFile.toString(),
-  //             filename: imagename,
-  //             contentType: new MediaType("image", "jpeg"),
-  //           )
-  //         : "",
-  //   });
+//   var formData = FormData.fromMap({
+//     "name": roomname,
+//     "room_desc": roomdesc,
+//     "countMics": mics,
+//     "supervisor_lockmic_access": supervisor,
+//     "room_background": image != null
+//         ? await MultipartFile.fromFile(
+//             imageFile.toString(),
+//             filename: imagename,
+//             contentType: new MediaType("image", "jpeg"),
+//           )
+//         : "",
+//   });
 
-  //   print(formData);
-  //   dio.options.headers = {
-  //     'Authorization': 'Bearer $token',
-  //     'Accept': 'application/json'
-  //   };
-  //   print(imageFile.path);
-  //   return dio.post(url, queryParameters: query ?? null, data: formData);
-  // }
+//   print(formData);
+//   dio.options.headers = {
+//     'Authorization': 'Bearer $token',
+//     'Accept': 'application/json'
+//   };
+//   print(imageFile.path);
+//   return dio.post(url, queryParameters: query ?? null, data: formData);
+// }
 }
-
-
-
-
-
-
 
 // class IntesDioHelper {
 //   static Dio dio;
 
 //   static init() {
 //     dio = Dio(BaseOptions(
-      
+
 //         baseUrl: 'https://newidea.link/nauma-v2/public/api/',
-        
+
 //         receiveDataWhenStatusError: true));
 //   }
 

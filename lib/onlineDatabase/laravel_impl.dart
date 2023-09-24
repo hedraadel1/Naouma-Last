@@ -1,3 +1,11 @@
+/*
+ * Copyright (c) 2023. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+ * Morbi non lorem porttitor neque feugiat blandit. Ut vitae ipsum eget quam lacinia accumsan.
+ * Etiam sed turpis ac ipsum condimentum fringilla. Maecenas magna.
+ * Proin dapibus sapien vel ante. Aliquam erat volutpat. Pellentesque sagittis ligula eget metus.
+ * Vestibulum commodo. Ut rhoncus gravida arcu.
+ */
+
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
@@ -9,7 +17,7 @@ import 'online_database_repository.dart';
 
 class LaravelImpl extends OnlineDatabaseRepository {
   String badStatusCode = "Wrong status code";
-  final String baseUrl = "https://nauma.onoo.pro/public/api";
+  final String baseUrl = "https://nauma.smartlys.online/public/api";
   final String loginWithPhonePath = "/login";
   final String loginWithFBPath = "/fc_login";
   final String signUpPath = "/register";
