@@ -62,40 +62,70 @@ class _GiftScreenState extends State<GiftScreen> {
     super.initState();
   }
 
+  @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (context) => HomeCubit()
-          ..getWalletAmount()
-          ..getGift()
-          ..getroomuser(id: widget.roomID),
-        child: BlocConsumer<HomeCubit, HomeStates>(
-          listener: (context, state) {},
-          builder: (context, state) {
-            _controller.text = counter.toString();
+      create: (context) => HomeCubit()
+        ..getWalletAmount()
+        ..getGift()
+        ..getroomuser(id: widget.roomID),
+      child: BlocConsumer<HomeCubit, HomeStates>(
+        listener: (context, state) {},
+        builder: (context, state) {
+          _controller.text = counter.toString();
 
-            return ConditionalBuilder(
-              condition: HomeCubit.get(context).getWalletModel != null &&
-                  HomeCubit.get(context).giftModel != null &&
-                  HomeCubit.get(context).roomUserModel != null,
-              builder: (context) => getIntresItem(
-                  HomeCubit.get(context).giftModel,
-                  context,
-                  HomeCubit.get(context).getWalletModel.data,
-                  HomeCubit.get(context).roomUserModel.data[index],
-                  HomeCubit.get(context).roomUserModel,
-                  index,
-                  newValue,
-                  dropDownValue),
-              fallback: (context) => Container(
-                height: MediaQuery.of(context).size.height * 0.40,
-                color: Colors.black.withOpacity(0.7),
-                child: Center(
-                  child: CircularProgressIndicator(),
+          return ConditionalBuilder(
+            condition: HomeCubit.get(context).getWalletModel != null &&
+                HomeCubit.get(context).giftModel != null &&
+                HomeCubit.get(context).roomUserModel != null,
+            builder: (context) => Column(
+              children: [
+                /////////////////////////////////////////
+                GridView.builder(
+                  itemCount: model.data.length,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3, // Number of columns
+                    crossAxisSpacing: 8.0, // Spacing between columns
+                    mainAxisSpacing: 8.0, // Spacing between rows
+                  ),
+                  itemBuilder: (context, index) {
+                    return buildGridProduct(model.data[index], index);
+                  },
                 ),
+
+                /////////////////////////////////////////
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: GridView.builder(
+                      itemCount: HomeCubit.get(context).giftModel.data.length,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3, // Number of columns
+                        crossAxisSpacing: 8.0, // Spacing between columns
+                        mainAxisSpacing: 8.0, // Spacing between rows
+                      ),
+                      itemBuilder: (context, index) {
+                        return buildGridProduct(
+                          HomeCubit.get(context).giftModel.data[index],
+                          index,
+                        );
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            fallback: (context) => Container(
+              height: MediaQuery.of(context).size.height * 0.40,
+              color: Colors.black.withOpacity(0.7),
+              child: Center(
+                child: CircularProgressIndicator(),
               ),
-            );
-          },
-        ));
+            ),
+          );
+        },
+      ),
+    );
   }
 
   Widget getIntresItem(
@@ -112,39 +142,31 @@ class _GiftScreenState extends State<GiftScreen> {
         height: MediaQuery.of(context).size.height * 0.40,
         child: Column(
           children: <Widget>[
-           Row(
-  mainAxisAlignment: MainAxisAlignment.start,
-  children: [
-    // Expanded for wallet amount
-    Expanded(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Flexible(
-            child: Container(
-              height: 30,
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      model1.walletAmount.toString(),
-                      style: secondaryTextStyle(color: Colors.white),
-                      maxLines: 2,
-                      textAlign: TextAlign.start,
-                      overflow: TextOverflow.visible,
+            Row(children: [
+              // Expanded for wallet amount
+              Expanded(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      height: 30,
+                      child: Row(
+                        children: [
+                          Text(
+                            model1.walletAmount.toString(),
+                            style: secondaryTextStyle(color: Colors.white),
+                            maxLines: 3,
+                            textAlign: TextAlign.start,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          )
-        ],
-      ),
-    ),
-  ],
-),
-
+            ]),
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -276,7 +298,7 @@ class _GiftScreenState extends State<GiftScreen> {
                 ),
                 Theme(
                   data: Theme.of(context)
-                      .copyWith(splashColor: Color.fromARGB(227, 233, 7, 7)),
+                      .copyWith(splashColor: Colors.transparent),
                   child: Container(
                     width: 130,
                     height: 40,
@@ -328,67 +350,49 @@ class _GiftScreenState extends State<GiftScreen> {
         ),
       );
 
-  Widget buildGridleProduct(GiftData model, int index) => Row(
-        children: List.generate(3, (colIndex) {
-          int cardIndex = index * 3 + colIndex;
-          return Expanded(
-            child: GestureDetector(
-              onTap: () {
-                setState(() {
-                  // ontap of each card, set the defined int to the grid view index
-                  selectedCard = cardIndex;
-
-                  giftID = model.id.toString();
-
-                  print(giftID);
-                });
-              },
-              child: SizedBox(
-                width: 90.0,
-                height: 100.0,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color:
-                        selectedCard == cardIndex ? Colors.blue : Colors.white,
-                    borderRadius: BorderRadius.horizontal(
-                      right: Radius.circular(8.0),
-                      left: Radius.circular(8.0),
-                    ),
-                  ),
-                  // check if the index is equal to the selected Card integer
-                  child: Column(
-                    children: [
-                      Container(
-                        height: 60,
-                        child: Column(
-                          children: [
-                            Image.network(
-                              (model.url ?? '') + model.giftLink,
-                              width: 50,
-                              height: 60,
-                              // fit: BoxFit.fill,
-                            ),
-                          ],
-                        ),
-                      ),
-                      Spacer(),
-                      Container(
-                        height: 35,
-                        decoration: BoxDecoration(
-                          color: KstorebuttonColor,
-                          borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(5),
-                            bottomRight: Radius.circular(5),
-                          ),
-                        ),
-                        child: Center(child: Text(model.price.toString())),
-                      ),
-                    ],
-                  ),
+  Widget buildGridProduct(GiftData model, int index) => GridTile(
+    child: GestureDetector(
+      onTap: () {
+        setState(() {
+          selectedCard = index;
+          giftID = model.id.toString();
+          print(giftID);
+        });
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          color: selectedCard == index ? Colors.blue : Colors.white,
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+        child: Column(
+          children: [
+            Container(
+              height: 60,
+              child: Image.network(
+                (model.url ?? '') + model.giftLink,
+                width: 60,
+                height: 60,
+              ),
+            ),
+            Spacer(),
+            Container(
+              height: 35,
+              decoration: BoxDecoration(
+                color: KstorebuttonColor,
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(5),
+                  bottomRight: Radius.circular(5),
+                ),
+              ),
+              child: Center(
+                child: Text(
+                  model.price.toString(),
                 ),
               ),
             ),
-          );
-        }),
-      );
+          ],
+        ),
+      ),
+    ),
+  );
 }

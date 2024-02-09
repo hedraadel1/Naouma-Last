@@ -39,15 +39,15 @@ class UserData {
 
   UserData(
       {this.id,
-        this.name,
-        this.mobile,
-        this.createdAt,
-        this.updatedAt,
-        this.userId,
-        this.fcmToken,
-        this.rule,
-        this.image,
-        this.frame});
+      this.name,
+      this.mobile,
+      this.createdAt,
+      this.updatedAt,
+      this.userId,
+      this.fcmToken,
+      this.rule,
+      this.image,
+      this.frame});
 
   UserData.fromJson(Map<String, dynamic> json) {
     id = json['id'];

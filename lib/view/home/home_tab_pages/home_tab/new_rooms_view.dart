@@ -1,11 +1,3 @@
-/*
- * Copyright (c) 2023. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
- * Morbi non lorem porttitor neque feugiat blandit. Ut vitae ipsum eget quam lacinia accumsan.
- * Etiam sed turpis ac ipsum condimentum fringilla. Maecenas magna.
- * Proin dapibus sapien vel ante. Aliquam erat volutpat. Pellentesque sagittis ligula eget metus.
- * Vestibulum commodo. Ut rhoncus gravida arcu.
- */
-
 import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:conditional_builder/conditional_builder.dart';
@@ -13,16 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:project/common_functions.dart';
 
 import 'package:project/models/room_data_model.dart';
 import 'package:project/models/room_index.dart';
 import 'package:project/utils/constants.dart';
-import 'package:project/utils/preferences_services.dart';
-import 'package:project/view/details/details_screen.dart';
 import 'package:project/view/details/newPage.dart';
-import 'package:project/widgets/my_rooms_item.dart';
 
 import '../../homeCubit.dart';
 import '../../states.dart';

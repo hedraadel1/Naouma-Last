@@ -282,12 +282,12 @@ class _MyRoomTabState extends State<MyRoomTab> {
                                   left: 2.0, right: 2.0, top: 2.0, bottom: 50),
                               decoration: BoxDecoration(
                                 color: kPrimaryColor,
-                                // image: DecorationImage(
-                                //   image: NetworkImage(
-                                //       'https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/4bb82b72535211.5bead62fe26d5.jpg'),
-                                //   //your image
-                                //   fit: BoxFit.cover,
-                                // ),
+                                image: DecorationImage(
+                                  image: NetworkImage(
+                                      'https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/4bb82b72535211.5bead62fe26d5.jpg'),
+                                  //your image
+                                  fit: BoxFit.cover,
+                                ),
                                 borderRadius: BorderRadius.only(
                                   bottomLeft: Radius.circular(50),
                                   bottomRight: Radius.circular(50),

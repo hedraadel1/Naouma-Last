@@ -1232,7 +1232,7 @@ class _PerimemScreenState extends State<PerimemScreen> {
                         child: Text(model.name),
                       ),
                       Image.network(
-                        model.url + model.badge,
+                        (model.url ?? '') + model.badge,
                         height: 80,
                         // fit: BoxFit.fill,
                       ),

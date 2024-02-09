@@ -21,7 +21,7 @@ const myinters = 'intres';
 const getwallet = 'getWalletAmount';
 const postwallet = "addAmountToWallet";
 const profile = 'user-profile';
-const gift = 'shop-gifts';
+const gift = 'get_all_products/gifts';
 const fcmtokenUrl = 'fcm_token';
 const specialid = 'get_all_UserSpecialIds';
 const specialRoomid = 'get_all_SpecialRoomID';
@@ -36,7 +36,7 @@ const friendsrequest = 'friends/request';
 const acceptrequest = 'accept-friend';
 const deleterequest = 'delete-friend';
 const roomsetting = 'roomsetting';
-const getroom = 'my-rooms';
+const getroom = 'rooms';
 const roomlocks = 'room-locks';
 const setLocks = 'room-password';
 

@@ -1,11 +1,3 @@
-/*
- * Copyright (c) 2023. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
- * Morbi non lorem porttitor neque feugiat blandit. Ut vitae ipsum eget quam lacinia accumsan.
- * Etiam sed turpis ac ipsum condimentum fringilla. Maecenas magna.
- * Proin dapibus sapien vel ante. Aliquam erat volutpat. Pellentesque sagittis ligula eget metus.
- * Vestibulum commodo. Ut rhoncus gravida arcu.
- */
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
@@ -13,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:project/network/cache_helper.dart';
+import 'package:project/utils/HedraTrace.dart';
+import 'dart:math';
 
 // import 'package:mime/mime.dart';
 // import 'package:dsio/dio.dart';
@@ -53,7 +47,7 @@ import 'package:project/utils/constants.dart';
 import 'package:project/utils/preferences_services.dart';
 import 'package:project/view/home/home_screen.dart';
 import 'package:project/view/home/states.dart';
-
+import 'package:get/get.dart' as getx;
 import '../../auth_model.dart';
 import '../../common_functions.dart';
 import '../../models/IsFollow_model.dart';
@@ -64,33 +58,98 @@ import '../../models/isFriend_model.dart';
 import '../../models/notification_model.dart';
 import '../../models/profileGifts_model.dart';
 import '../../models/users_following_room_model.dart';
+import 'package:stack_trace/stack_trace.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class HomeCubit extends Cubit<HomeStates> {
   HomeCubit() : super(HomeIntialStates());
+  HedraTrace hedra = HedraTrace(StackTrace.current);
 
   static HomeCubit get(context) => BlocProvider.of(context);
   static Dio dio;
 
   CreateRoomModel createRoomModel;
 
-  void createroom({roomname, roomdesc}) {
+  void createroom({String roomname, String roomdesc}) async {
     emit(HomeLoadingState());
 
-    DioHelper.postdata(
+    try {
+      final response = await DioHelper.postdata(
         url: roomstore,
         token: token,
-        data: {'room_name': roomname, 'room_desc': roomdesc}).then((value) {
-      print(value.data);
+        data: {'room_name': roomname, 'room_desc': roomdesc},
+      );
+// Get data list
+      final rooms = response.data['data'];
 
-      createRoomModel = CreateRoomModel.fromJson(value.data);
-      userCreate(
+// Check that list is not empty
+      if (rooms != null && rooms.isNotEmpty) {
+        // Get first item
+        final room = rooms.first;
+
+        // Extract fields
+
+        final roomId = room['id'];
+        print("wooooooooooow is" + roomId.toString());
+
+        await FirebaseCreate(
           roomName: roomname,
           roomDesc: roomdesc,
-          roomid: createRoomModel.data.id.toString());
+          roomid: roomId.toString(),
+        );
+      } else {
+        // Show toast message
+        Fluttertoast.showToast(
+            msg: 'No data in API response',
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0);
+      }
+
       emit(HomeSuccessStates());
-    }).catchError((error) {
-      emit(HomeErrorStates(error.toString()));
-    });
+      CommonFunctions.showToast(
+          "Room created in API and Firestore", Colors.greenAccent);
+      //getx.Get.offAll(() => HomeScreen());
+    } catch (e) {
+      print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+      print(" - Error - There is Error in ${hedra.fileName} -- " +
+          "In Line : ${hedra.lineNumber} -- " +
+          "The caller function : ${hedra.callerFunctionName} -- " +
+          "The Details is in create not fire: :::: " +
+          e.toString() +
+          " :::: " +
+          "-- Hedra Adel - Error -");
+      print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+    }
+  }
+
+  Future<void> FirebaseCreate({
+    @required String roomName,
+    @required String roomDesc,
+    @required String roomid,
+  }) async {
+    try {
+      RoomModel model =
+          RoomModel(roomname: roomName, roomDesc: roomDesc, roomID: roomid);
+
+      await FirebaseFirestore.instance
+          .collection('rooms')
+          .doc(roomid)
+          .set(model.toMap());
+    } catch (e) {
+      print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+      print(" - Error - There is Error in ${hedra.fileName} -- " +
+          "In Line : ${hedra.lineNumber} -- " +
+          "The caller function : ${hedra.callerFunctionName} -- " +
+          "The Details is in firestore is : :::: " +
+          e.toString() +
+          " :::: " +
+          "-- Hedra Adel - Error -");
+      print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+    }
   }
 
   void userCreate(
@@ -282,7 +341,9 @@ class HomeCubit extends Cubit<HomeStates> {
           users.add(CreateUserModel.fromJson(element.data()));
       });
       emit(GetallUsersSuccessStates());
-      print("ok");
+      print("--------------------");
+      print("getusers ok");
+      print("--------------------");
     }).catchError((error) {
       emit(GetallUsersErrorState(error.toString()));
     });
@@ -385,7 +446,9 @@ class HomeCubit extends Cubit<HomeStates> {
       senderId: senderId,
     );
     print(receverId);
-
+    print("--------------------");
+    print("addfirendFirebase ok");
+    print("--------------------");
     var documentReference = FirebaseFirestore.instance
         .collection('users')
         .doc(senderId)
@@ -431,6 +494,7 @@ class HomeCubit extends Cubit<HomeStates> {
           'username': username,
           'userID': senderId,
           'isFriend': true
+
           // 'roomId': roomid,
           // 'state': state
           // 'timestamp': DateTime.now().millisecondsSinceEpoch.toString(),
@@ -440,6 +504,10 @@ class HomeCubit extends Cubit<HomeStates> {
           // 'ApiUserID': userId
         },
       );
+      print("--------------------");
+      print(
+          "FirebaseFirestore.instance.runTransaction .collection('friends')  ok");
+      print("--------------------");
     });
 
     // FirebaseFirestore.instance
@@ -457,7 +525,8 @@ class HomeCubit extends Cubit<HomeStates> {
   NotificationModel notificationModel;
 
   void getnotification({@required id, @required password}) {
-    print(id);
+    /*
+  print(id);
     DioHelper.postdata(
       url: 'getNotification?room_id=/$id',
       token: token,
@@ -477,12 +546,17 @@ class HomeCubit extends Cubit<HomeStates> {
       print("Error in getnotification In homeCubit" + error.toString());
       emit(NotificationErrorState());
     });
+
+  */
   }
 
   void logoutUserRoom({@required id}) {
     print(id);
     DioHelper.getdata(url: 'rooms/$id/logout', token: token).then((value) {
       print(value.data);
+      print("--------------------");
+      print("logoutUserRoom  ok");
+      print("--------------------");
     }).catchError((error) {
       print(error.toString());
     });
@@ -499,7 +573,9 @@ class HomeCubit extends Cubit<HomeStates> {
             token: token)
         .then((value) {
       print(value.data);
-
+      print("--------------------");
+      print("patchfcmtoken  ok");
+      print("--------------------");
       emit(FcmSuccessStates());
       // emit(ShopRegisterSuccessStates(RegisterModel));
     }).catchError((error) {
@@ -516,40 +592,47 @@ class HomeCubit extends Cubit<HomeStates> {
 
     DioHelper.getdata(url: 'get-room-followers/$id', token: token)
         .then((value) {
-      roomUserModel = InRoomUserModelModel.fromJson(value.data);
+      if (value != null && value.data != null) {
+        roomUserModel = InRoomUserModelModel.fromJson(value.data);
 
-      print("getroomuser() Has been Complete and data is " +
-          value.data +
-          "--- Hedra Adel ---");
+        print("getroomuser() Has been Complete and data is " +
+            value.data +
+            "--- Hedra Adel ---");
 
-      for (int i = 0; i < roomUserModel.data.length; i++) {
-        if (apiid == roomUserModel.data[i].userId.toString()) {
-          print("roomUserModel apiid is " +
-              apiid.toString() +
-              "--- Hedra Adel ---");
-          userstateInroom = roomUserModel.data[i].typeUser;
-          specialId = roomUserModel.data[i].spacialId;
-          nameOFPackage = roomUserModel.data[i].package.first.name;
-          packageColor = roomUserModel.data[i].package.first.color;
-          packagebadge = roomUserModel.data[i].package.first.url;
+        if (roomUserModel.data != null) {
+          for (int i = 0; i < roomUserModel.data.length; i++) {
+            if (apiid == roomUserModel.data[i].userId.toString()) {
+              print("roomUserModel api id is " +
+                  apiid.toString() +
+                  "--- Hedra Adel ---");
+              userstateInroom = roomUserModel.data[i].typeUser;
+              specialId = roomUserModel.data[i].spacialId;
+              nameOFPackage = roomUserModel.data[i].package.first.name;
+              packageColor = roomUserModel.data[i].package.first.color;
+              packagebadge = roomUserModel.data[i].package.first.url;
 
-          if (roomUserModel.data[i].isPurchaseId == true) {
-            hasSpecialID = true;
-          } else {
-            hasSpecialID = false;
+              if (roomUserModel.data[i].isPurchaseId == true) {
+                hasSpecialID = true;
+              } else {
+                hasSpecialID = false;
+              }
+            }
+          }
+
+          for (int i = 0; i < roomUserModel.data.length; i++) {
+            roomUsersNow(
+                username: roomUserModel.data[i].name,
+                roomid: id,
+                state: true,
+                userid: roomUserModel.data[i].spacialId);
           }
         }
-      }
 
-      for (int i = 0; i < roomUserModel.data.length; i++) {
-        roomUsersNow(
-            username: roomUserModel.data[i].name,
-            roomid: id,
-            state: true,
-            userid: roomUserModel.data[i].spacialId);
+        emit(InroomSuccessStates());
+      } else {
+        print('Response is null');
+        emit(InroomErrorState());
       }
-
-      emit(InroomSuccessStates());
     }).catchError((error) {
       print(error.toString());
       emit(InroomErrorState());
@@ -571,7 +654,9 @@ class HomeCubit extends Cubit<HomeStates> {
         .doc(roomid)
         .collection(roomid)
         .doc(userid);
-
+    print("--------------------");
+    print("roomUsersNow  ok");
+    print("--------------------");
     FirebaseFirestore.instance.runTransaction((transaction) async {
       transaction.set(
         documentReference,
@@ -620,7 +705,12 @@ class HomeCubit extends Cubit<HomeStates> {
       @required giftid,
       @required count}) {
     emit(SendGiftLoadingState());
-    print(type);
+
+    print("prine type" + type.toString());
+
+    print("--------------------");
+    print("sendgift  ok");
+    print("--------------------");
 
     DioHelper.postdata(
             url: 'room/$id/send-gift/$giftid',
@@ -633,7 +723,7 @@ class HomeCubit extends Cubit<HomeStates> {
       print(value.data);
 
       emit(SendGiftSuccessStates());
-      print('send');
+      print('send gift success');
     }).catchError((error) {
       emit(SendGiftErrorStates(error.toString()));
     });
@@ -666,6 +756,11 @@ class HomeCubit extends Cubit<HomeStates> {
     DioHelper.getdata(url: getroom, token: token).then((value) {
       followModel = FollowModel.fromJson(value.data);
       print(value.data);
+
+      print("--------------------");
+      print("followingroom  ok");
+      print("--------------------");
+
       emit(FollowingSuccessStates());
     }).catchError((error) {
       emit(FollowingErrorStates(error.toString()));
@@ -716,6 +811,10 @@ class HomeCubit extends Cubit<HomeStates> {
 
       print(value.data);
 
+      print("--------------------");
+      print("postSupervsorroom  ok");
+      print("--------------------");
+
       emit(AddSupervsorSuccessStates());
     }).catchError((error) {
       emit(AddSupervsorErrorStates(error.toString()));
@@ -765,7 +864,9 @@ class HomeCubit extends Cubit<HomeStates> {
       // micModel = MicModel.fromJson(value.data);
 
       // print(value.data);
-
+      print("--------------------");
+      print("joinmics  ok");
+      print("--------------------");
       emit(JoinmicSuccessStates());
       print('succes');
       // emit(ShopRegisterSuccessStates(RegisterModel));
@@ -784,6 +885,11 @@ class HomeCubit extends Cubit<HomeStates> {
       addfriendsModel = AddfriendsModel.fromJson(value.data);
       print(value.data);
       CommonFunctions.showToast("تم ارسال طلب الصداقة", Colors.green);
+
+      print("--------------------");
+      print("addfriend  ok");
+      print("--------------------");
+
       emit(AddFriendSuccessStates());
       // print('succes');
       // emit(ShopRegisterSuccessStates(RegisterModel));
@@ -801,6 +907,10 @@ class HomeCubit extends Cubit<HomeStates> {
       showFriendsModel = ShowFriendsModel.fromJson(value.data);
       print(value.data);
 
+      print("--------------------");
+      print("showfriends 919  ok");
+      print("--------------------");
+
       emit(ShowFriendSuccessStates());
     }).catchError((error) {
       emit(ShowFriendErrorStates(error.toString()));
@@ -815,6 +925,10 @@ class HomeCubit extends Cubit<HomeStates> {
     DioHelper.getdata(url: friendsrequest, token: token).then((value) {
       friendRequestsModel = FriendRequestsModel.fromJson(value.data);
       print(value.data);
+
+      print("--------------------");
+      print("getfriendRequests 939  ok");
+      print("--------------------");
 
       emit(FriendRequestsSuccessStates());
     }).catchError((error) {
@@ -833,6 +947,10 @@ class HomeCubit extends Cubit<HomeStates> {
             url: acceptrequest, data: {'friend_id': id}, token: token)
         .then((value) {
       acceptRequestsModel = AcceptRequestsModel.fromJson(value.data);
+
+      print("--------------------");
+      print("acceptfriendrequest 962  ok");
+      print("--------------------");
 
       print(value.data);
 
@@ -1054,6 +1172,10 @@ class HomeCubit extends Cubit<HomeStates> {
         .collection(roomid)
         .doc(userid);
 
+    print("--------------------");
+    print("loginroom 1187  ok");
+    print("--------------------");
+
     FirebaseFirestore.instance.runTransaction((transaction) async {
       transaction.set(
         documentReference,
@@ -1128,6 +1250,10 @@ class HomeCubit extends Cubit<HomeStates> {
         token: token,
         data: {'password': roompassword}).then((value) {
       print(value.data);
+
+      print("--------------------");
+      print("setRoomPassword 1267  ok");
+      print("--------------------");
 
       emit(SetPasswordRoomSuccessStates());
     }).catchError((error) {

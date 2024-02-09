@@ -1,11 +1,3 @@
-/*
- * Copyright (c) 2023. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
- * Morbi non lorem porttitor neque feugiat blandit. Ut vitae ipsum eget quam lacinia accumsan.
- * Etiam sed turpis ac ipsum condimentum fringilla. Maecenas magna.
- * Proin dapibus sapien vel ante. Aliquam erat volutpat. Pellentesque sagittis ligula eget metus.
- * Vestibulum commodo. Ut rhoncus gravida arcu.
- */
-
 import 'package:conditional_builder/conditional_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,14 +5,12 @@ import 'package:get/get.dart';
 import 'package:project/common_functions.dart';
 import 'package:project/models/get_wallet_model.dart';
 import 'package:project/models/shop_purchase_model.dart';
-
 import 'package:project/shopCubit.dart';
 import 'package:project/shopStates.dart';
 import 'package:project/utils/constants.dart';
 import 'package:project/view/home/homeCubit.dart';
 import 'package:project/wallet_screen.dart';
 import 'dart:math';
-
 import 'models/shop_background_mode.dart';
 import 'myBackground_screen.dart';
 

@@ -1,6 +1,6 @@
 class GiftModel {
   List<GiftData> data;
-  Null message;
+  String message;
   int status;
 
   GiftModel({this.data, this.message, this.status});

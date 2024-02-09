@@ -31,7 +31,7 @@ void main() async {
   await PreferencesServices.init();
   var fcmtoken = await FirebaseMessaging.instance.getToken();
   fcm_token = fcmtoken;
-  print(fcmtoken);
+  print('Hey, this is the FCM token: >> $fcmtoken');
   NotificationModel notificationModel;
   FirebaseAnalytics mFirebaseAnalytics = FirebaseAnalytics.instance;
   // FirebaseMessaging.onMessage.listen((event) {
@@ -46,7 +46,7 @@ void main() async {
   //         decoration: BoxDecoration(
   //           image: DecorationImage(
   //               image: NetworkImage(
-  //                   "https://newidea.link/nauma-v2/public/uploads/images/shop/Ip6PRJUaTQveUvU93zlZdOlA9aU7WWcCCXETAKpn.gif"),
+  //                   "https://nauma.smartlys.online/public/uploads/images/shop/CmrVxxJeXIxkQer3p2HEybSYMzHtJ06tnHhahrhI.png"),
   //               fit: BoxFit.cover),
   //         ),
   //       ),
@@ -85,8 +85,6 @@ void main() async {
   Widget widget;
   print(token);
 
-  // image = CacheHelper.getData(key: 'image');
-  // frameImage = CacheHelper.getData(key: 'frameimage');
   if (token != null) {
     widget = HomeScreen();
   } else {
@@ -102,25 +100,20 @@ class MyApp extends StatelessWidget {
   final Widget startwidget;
 
   MyApp({this.startwidget});
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
         providers: [
           BlocProvider(create: (context) => LoginScreenCubit()),
-          // We Get From api Main startup
-          // In home-Cubit : ( User friends - Add Experience Points  - Friends Request - User Room )
-          // Profile Details
-          // In Shop-Cubit : Wallet Amount - Interes - Frames - Backgrounds - Special Room ID - Special User ID - Permiem account (PermiemData)
           BlocProvider(
               create: (context) => HomeCubit()
                 ..showfriends()
                 ..addExperience()
-
                 // ..getfriendRequests()
                 ..getmyroom()
               // ..getWalletAmount(),
               ),
-
           BlocProvider(create: (context) => ProfileCubit()..getprofile()),
           BlocProvider(
             create: (context) => ShopCubit()
@@ -150,28 +143,3 @@ class MyApp extends StatelessWidget {
         ));
   }
 }
-
-
-
-
-// void userlogin({@required mobile, @required password}) {
-//     emit(ShopLoginLoadingState());
-//     DioHelper.postdata(
-//             url: Login,
-//             data: {
-//               'mobile': mobile,
-//               'password': password,
-//             },
-//             token: token)
-//         .then((value) {
-//       print(value.data);
-//       authModel = AuthModel.fromJson(value.data);
-//       userCreate(
-//           name: authModel.user.name, phone: mobile, uid: authModel.user.userId);
-//       print(authModel.user.userId);
-
-//       emit(ShopLoginSuccessStates(authModel));
-//     }).catchError((error) {
-//       emit(ShopLoginErrorStates(error.toString()));
-//     });
-//   }

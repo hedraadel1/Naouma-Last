@@ -1,0 +1,57 @@
+import 'dart:async';
+import 'dart:io';
+import 'dart:ui';
+import 'package:project/utils/HedraTrace.dart';
+import 'package:agora_rtc_engine/rtc_engine.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:conditional_builder/conditional_builder.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
+import 'package:hexcolor/hexcolor.dart';
+import 'package:image_picker/image_picker.dart';
+
+import 'package:nb_utils/nb_utils.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:project/audiocall.dart';
+import 'package:project/common_functions.dart';
+import 'package:project/endpoint.dart';
+import 'package:project/models/IsFollow_model.dart';
+import 'package:project/models/firebase_room_model.dart';
+import 'package:project/models/get_user_exp_model.dart';
+import 'package:project/models/notification_model.dart';
+import 'package:project/models/roomUser.dart';
+import 'package:project/models/room_index.dart';
+import 'package:project/models/room_user_model.dart';
+import 'package:project/models/send_gift_model.dart';
+import 'package:project/models/user_mic_model.dart';
+import 'package:project/oneTo_one_screen.dart';
+import 'package:project/utils/constants.dart';
+import 'package:project/utils/images.dart';
+import 'package:project/utils/preferences_services.dart';
+import 'package:project/view/details/components/roomImageTap.dart';
+import 'package:project/view/details/users_Inroom.dart';
+import 'package:project/view/home/homeCubit.dart';
+import 'package:project/view/home/home_tab_pages/myroom/room_setting.dart';
+import 'package:agora_rtm/agora_rtm.dart';
+import 'package:uuid/uuid.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+
+import '../../gift_screen.dart';
+import '../../models/firebaseModel.dart';
+import '../../models/mics_model.dart';
+import '../../shop_background_gift.dart';
+import '../../utils/size_config.dart';
+import 'components/mic_click_dialog.dart';
+
+class DetailsScreen extends StatefulWidget {
+  //// Data Has Been Send From my_rooms_view.dart
+  //// By Hedra Adel
+
+  final String username;
+  final String userID;
+  final String

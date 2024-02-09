@@ -1,11 +1,3 @@
-/*
- * Copyright (c) 2023. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
- * Morbi non lorem porttitor neque feugiat blandit. Ut vitae ipsum eget quam lacinia accumsan.
- * Etiam sed turpis ac ipsum condimentum fringilla. Maecenas magna.
- * Proin dapibus sapien vel ante. Aliquam erat volutpat. Pellentesque sagittis ligula eget metus.
- * Vestibulum commodo. Ut rhoncus gravida arcu.
- */
-
 import 'dart:ui';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -376,7 +368,7 @@ class _ShopIntresScreenState extends State<ShopIntresScreen> {
                     child: Column(
                       children: [
                         Image.network(
-                          model.url + model.giftLink,
+                          (model.url ?? '') + model.giftLink,
                           height: 200,
                           width: double.infinity,
                           fit: BoxFit.fill,

@@ -56,10 +56,6 @@ class _UsersInroomState extends State<UsersInroom> {
           if (state is SendGiftSuccessStates) {
             print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
           }
-
-          // if (state is AddBlockListSuccessStates) {
-          //   CommonFunctions.showToast('تم حظر العظو', Colors.green);
-          // }
         },
         builder: (context, state) {
           var model = HomeCubit.get(context).roomUserModel;
@@ -116,17 +112,6 @@ class _UsersInroomState extends State<UsersInroom> {
                       child: CircularProgressIndicator(),
                     ),
                   ),
-                  // builder: (BuildContext context, AsyncSnapshot snapshot) {
-                  //   if (HomeCubit.get(context).categoriesModel.data == null) {
-                  //     return CircularProgressIndicator();
-                  //   } else {
-                  //     return ListView.builder(
-                  //         itemBuilder: (context, index) => buildCatItem(
-                  //             HomeCubit.get(context).categoriesModel.data[index]),
-                  //         itemCount:
-                  //             HomeCubit.get(context).categoriesModel.data.length);
-                  //   }
-                  // },
                 ),
               ));
         },
@@ -134,168 +119,6 @@ class _UsersInroomState extends State<UsersInroom> {
     );
   }
 }
-
-// class UsersInroom extends StatelessWidget {
-//   String roomID;
-//   String type;
-//   String giftId;
-//   String controller;
-//   UsersInroom({this.roomID, this.type, this.giftId, this.controller});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     var model;
-//     return BlocProvider(
-//       create: ((context) => HomeCubit()..getroomuser(id: roomID)),
-//       child: BlocConsumer<HomeCubit, HomeStates>(
-//         listener: (context, state) {
-//           if (state is AddSupervsorSuccessStates) {
-//             // CommonFunctions.showToast('تم تعين مشرف', Colors.green);
-//             print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
-//           }
-//           if (state is SendGiftSuccessStates) {
-//             print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
-//           }
-//         },
-//         builder: (context, state) {
-//           var model = HomeCubit.get(context).roomUserModel;
-//           return Container(
-//               height: MediaQuery.of(context).size.height * 0.80,
-//               decoration: BoxDecoration(
-//                 color: Colors.white,
-//                 borderRadius: BorderRadius.only(
-//                   topLeft: Radius.circular(30.0),
-//                   topRight: Radius.circular(30.0),
-//                 ),
-//               ),
-//               child: Scaffold(
-//                 appBar: AppBar(
-//                   backgroundColor: Colors.white,
-//                   title: Text(
-//                     ':المتواجدون',
-//                     style: TextStyle(color: Colors.black),
-//                   ),
-//                   centerTitle: true,
-//                   actions: [
-//                     Padding(
-//                         padding: const EdgeInsets.all(8.0),
-//                         child: IconButton(
-//                           icon: Icon(
-//                             Icons.refresh_rounded,
-//                           ),
-//                           onPressed: () {},
-//                         ))
-//                   ],
-//                 ),
-//                 body: ConditionalBuilder(
-//                   condition: HomeCubit.get(context).roomUserModel != null,
-//                   // HomeCubit.get(context).showFriendsModel != null,
-//                   builder: (context) {
-//                     return ListView.separated(
-//                         itemBuilder: (context, index) => builditem(
-//                             HomeCubit.get(context).roomUserModel.data[index],
-//                             // HomeCubit.get(context).showFriendsModel.data[index],
-//                             context),
-//                         separatorBuilder: (context, index) => Divider(),
-//                         itemCount:
-//                             HomeCubit.get(context).roomUserModel.data.length);
-//                   },
-//                   fallback: (context) => Container(
-//                     color: Colors.white,
-//                     child: Center(
-//                       child: CircularProgressIndicator(),
-//                     ),
-//                   ),
-//                   // builder: (BuildContext context, AsyncSnapshot snapshot) {
-//                   //   if (HomeCubit.get(context).categoriesModel.data == null) {
-//                   //     return CircularProgressIndicator();
-//                   //   } else {
-//                   //     return ListView.builder(
-//                   //         itemBuilder: (context, index) => buildCatItem(
-//                   //             HomeCubit.get(context).categoriesModel.data[index]),
-//                   //         itemCount:
-//                   //             HomeCubit.get(context).categoriesModel.data.length);
-//                   //   }
-//                   // },
-//                 ),
-//               ));
-//         },
-//       ),
-//     );
-//   }
-
-// Widget build(BuildContext context) {
-//   return Builder(
-//     builder: (BuildContext context) {
-//       HomeCubit.get(context).getroomuser(id: roomID);
-//       return BlocConsumer<HomeCubit, HomeStates>(
-//         listener: (context, state) {},
-//         builder: (context, state) {
-//           var model = HomeCubit.get(context).roomUserModel;
-
-//           return Container(
-//               height: MediaQuery.of(context).size.height * 0.80,
-//               decoration: BoxDecoration(
-//                 color: Colors.white,
-//                 borderRadius: BorderRadius.only(
-//                   topLeft: Radius.circular(30.0),
-//                   topRight: Radius.circular(30.0),
-//                 ),
-//               ),
-//               child: Scaffold(
-//                 appBar: AppBar(
-//                   backgroundColor: Colors.white,
-//                   title: Text(
-//                     ':المتواجدون',
-//                     style: TextStyle(color: Colors.black),
-//                   ),
-//                   centerTitle: true,
-//                   actions: [
-//                     Padding(
-//                         padding: const EdgeInsets.all(8.0),
-//                         child: IconButton(
-//                           icon: Icon(
-//                             Icons.refresh_rounded,
-//                           ),
-//                           onPressed: () {},
-//                         ))
-//                   ],
-//                 ),
-//                 body: ConditionalBuilder(
-//                   condition: HomeCubit.get(context).roomUserModel != null,
-//                   builder: (context) {
-//                     return ListView.separated(
-//                         itemBuilder: (context, index) => builditem(
-//                             HomeCubit.get(context).roomUserModel.data[index],
-//                             context),
-//                         separatorBuilder: (context, index) => Divider(),
-//                         itemCount:
-//                             HomeCubit.get(context).roomUserModel.data.length);
-//                   },
-//                   fallback: (context) => Container(
-//                     color: Colors.white,
-//                     child: Center(
-//                       child: CircularProgressIndicator(),
-//                     ),
-//                   ),
-//                   // builder: (BuildContext context, AsyncSnapshot snapshot) {
-//                   //   if (HomeCubit.get(context).categoriesModel.data == null) {
-//                   //     return CircularProgressIndicator();
-//                   //   } else {
-//                   //     return ListView.builder(
-//                   //         itemBuilder: (context, index) => buildCatItem(
-//                   //             HomeCubit.get(context).categoriesModel.data[index]),
-//                   //         itemCount:
-//                   //             HomeCubit.get(context).categoriesModel.data.length);
-//                   //   }
-//                   // },
-//                 ),
-//               ));
-//         },
-//       );
-//     },
-//   );
-// }
 
 void _updateuserDataFirebase(String id, String name, String roomID) async {
   print("inUpdate doc: $id");
@@ -315,33 +138,9 @@ void _updateuserDataFirebase(String id, String name, String roomID) async {
     print(e);
     return;
   });
-  // setState(() {
-  //   micModel.micStatus
-  //       ? _engine
-  //           .setClientRole(
-  //           ClientRole.Broadcaster,
-  //         )
-  //           .then(
-  //           (value) {
-  //             print("Broadcaster user");
-  //           },
-  //         )
-  //       : _engine
-  //           .setClientRole(
-  //           ClientRole.Audience,
-  //         )
-  //           .then(
-  //           (value) {
-  //             print("Audience user");
-  //           },
-  //         );
-  // });
 }
 
 void _updateMutedFirebase(String roomID) async {
-  // print("inUpdate doc: $index");
-  // print("name: ${micModel.userName}");
-  // print("id: ${micModel.userId}");
   CollectionReference _collectionRef = FirebaseFirestore.instance
       .collection('roomUsers')
       .doc(roomID)
@@ -357,27 +156,6 @@ void _updateMutedFirebase(String roomID) async {
     print(e);
     return;
   });
-  // setState(() {
-  //   micModel.micStatus
-  //       ? _engine
-  //           .setClientRole(
-  //           ClientRole.Broadcaster,
-  //         )
-  //           .then(
-  //           (value) {
-  //             print("Broadcaster user");
-  //           },
-  //         )
-  //       : _engine
-  //           .setClientRole(
-  //           ClientRole.Audience,
-  //         )
-  //           .then(
-  //           (value) {
-  //             print("Audience user");
-  //           },
-  //         );
-  // });
 }
 
 Widget builditem(InRoomUserModelModelData model, String text, String roomID,
@@ -402,7 +180,7 @@ Widget builditem(InRoomUserModelModelData model, String text, String roomID,
             ),
             Spacer(),
             Text(
-              'LV ${model.level.userCurrentLevel.toString()}',
+              model.level != null ? "LV ${model.level.userCurrentLevel}" : "LV",
               style:
                   TextStyle(color: kPrimaryColor, fontWeight: FontWeight.bold),
             ),
@@ -418,48 +196,6 @@ Widget builditem(InRoomUserModelModelData model, String text, String roomID,
               //     borderRadius: BorderRadius.circular(60)),
               isScrollControlled: true,
               builder: (context) {
-                // return Stack(
-                //   children: <Widget>[
-                //     // The containers in the background
-                //     FractionallySizedBox(
-                //       heightFactor: 0.40,
-                //       child: Column(
-                //         children: <Widget>[
-                //           Container(
-                //               // height: MediaQuery.of(context).size.height * .50,
-                //               // color: Colors.blue,
-                //               ),
-                //           Container(
-                //             // height: MediaQuery.of(context).size.height * .20,
-                //             color: Colors.white,
-                //             child: Center(
-                //               child: Text("aaaaa"),
-                //             ),
-                //           )
-                //         ],
-                //       ),
-                //     ),
-                //     // The card widget with top padding,
-                //     // incase if you wanted bottom padding to work,
-                //     // set the `alignment` of container to Alignment.bottomCenter
-                //     new Container(
-                //       alignment: Alignment.topCenter,
-                //       padding: new EdgeInsets.only(
-                //           top: MediaQuery.of(context).size.height * .58,
-                //           right: 20.0,
-                //           left: 20.0),
-                //       child: new Container(
-                //         // height: 200.0,
-                //         // width: MediaQuery.of(context).size.width,
-                //         child: CircleAvatar(
-                //           child: Image.asset("assets/images/Profile Image.png"),
-                //           backgroundColor: kPrimaryColor,
-                //           radius: 50,
-                //         ),
-                //       ),
-                //     )
-                //   ],
-                // );
                 return FractionallySizedBox(
                   heightFactor: 0.42,
                   child: Stack(children: [
@@ -525,41 +261,6 @@ Widget builditem(InRoomUserModelModelData model, String text, String roomID,
                                   // Spacer(),
                                 ],
                               ),
-                              // Container(
-                              //   height: 35,
-                              //   color: Colors.transparent.withOpacity(0.5),
-
-                              //   // color: Colors.grey.withOpacity(0.5),
-                              //   // decoration: BoxDecoration(
-                              //   //   color: Colors.transparent.withOpacity(0.5),
-                              //   //   borderRadius: BorderRadius.only(
-                              //   //     // topRight: Radius.circular(10),
-                              //   //     bottomRight: Radius.circular(10),
-                              //   //     bottomLeft: Radius.circular(10),
-                              //   //     // topLeft: Radius.circular(10),
-                              //   //   ),
-
-                              //   //   // shape: BoxShape.circle,
-                              //   // ),
-                              //   // height: MediaQuery.of(context).size.height * .20,
-                              //   //             color: Colors.white,
-                              //   //             child: Center(
-                              //   //               child: Text("aaaaa"),
-                              //   //             ),
-                              // ),
-
-                              // Container(
-                              //   child: FloatingActionButton(
-                              //       child: CircleAvatar(
-                              //         radius: 50,
-                              //         backgroundImage: AssetImage(
-                              //           "assets/images/Profile Image.png",
-                              //         ),
-                              //       ),
-                              //       onPressed: () {}),
-                              // ),
-                              // floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-
                               SizedBox(
                                 height: 20,
                               ),
@@ -673,7 +374,6 @@ Widget builditem(InRoomUserModelModelData model, String text, String roomID,
                                   ),
                                 ],
                               ),
-
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -1154,7 +854,6 @@ Widget builditem(InRoomUserModelModelData model, String text, String roomID,
                         ),
                       ],
                     ),
-
                     Container(
                       // height: 70,
 
@@ -1173,30 +872,6 @@ Widget builditem(InRoomUserModelModelData model, String text, String roomID,
                         ),
                       ),
                     ),
-
-                    // Container(
-                    //   child: FloatingActionButton(
-                    //       child: CircleAvatar(
-                    //         radius: 50,
-                    //         backgroundImage: AssetImage(
-                    //           "assets/images/Profile Image.png",
-                    //         ),
-                    //       ),
-                    //       onPressed: () {}),
-                    // ),
-
-                    // Positioned(
-                    //   top: -10,
-                    //   right: 10,
-                    //   child: FloatingActionButton(
-                    //       child: CircleAvatar(
-                    //         radius: 50,
-                    //         backgroundImage: AssetImage(
-                    //           "assets/images/Profile Image.png",
-                    //         ),
-                    //       ),
-                    //       onPressed: () {}),
-                    // )
                   ]),
                 );
               });
@@ -1208,220 +883,20 @@ void onSelected(BuildContext context, int item, int userID, String roomid) {
   switch (item) {
     case 0:
       HomeCubit.get(context).postSupervsorroom(id: userID);
-      // Navigator.of(context).push(
-      //     MaterialPageRoute(builder: (context) => ShopbackgroundGift()));
+
       break;
 
     case 1:
       HomeCubit.get(context).deleteSupervsorroom(id: userID);
-      // Navigator.of(context).push(
-      //     MaterialPageRoute(builder: (context) => ShopbackgroundGift()));
+
       break;
 
     case 2:
       HomeCubit.get(context).postUnfollowser(idUser: userID, idRoom: roomid);
-      // Navigator.of(context).push(
-      //     MaterialPageRoute(builder: (context) => ShopbackgroundGift()));
+
       break;
 
     case 4:
-      // Navigator.of(context).push(MaterialPageRoute(
-      //     builder: (context) => RoomSettings(
-      //           roomName: widget.roomName,
-      //           type: widget.roomDesc,
-      //           roomID: widget.roomId,
-      //         )));
       break;
-    // case 1:
-    //    Navigator.of(context).push(
-    //        MaterialPageRoute(builder: (context) => ShopbackgroundGift()));
-    //   break;
   }
 }
-
-// Widget userItem(
-//   InRoomUserModelModelData model,
-//   BuildContext context,
-// ) =>
-//     Padding(
-//       padding: const EdgeInsets.all(20.0),
-//       child: InkWell(
-//         child: Row(
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: [
-//             CircleAvatar(
-//               radius: 20,
-//               backgroundImage: AssetImage(
-//                 "assets/images/Profile Image.png",
-//               ),
-//             ),
-//             SizedBox(
-//               width: 20.0,
-//             ),
-//             Text(model.name),
-//             Spacer(),
-//             Text(
-//               'LV.39',
-//               style:
-//                   TextStyle(color: kPrimaryColor, fontWeight: FontWeight.bold),
-//             ),
-//           ],
-//         ),
-//         onTap: () {
-//           showModalBottomSheet(
-//               context: context,
-//               isScrollControlled: true,
-//               builder: (context) {
-//                 return FractionallySizedBox(
-//                   heightFactor: 0.35,
-//                   child: Container(
-//                     decoration: new BoxDecoration(
-//                         color: Colors.white,
-//                         borderRadius: new BorderRadius.only(
-//                             topLeft: const Radius.circular(10.0),
-//                             topRight: const Radius.circular(10.0))),
-//                     child: Column(
-//                       children: [
-//                         Container(
-//                           child: FloatingActionButton(
-//                               child: CircleAvatar(
-//                                 radius: 50,
-//                                 backgroundImage: AssetImage(
-//                                   "assets/images/Profile Image.png",
-//                                 ),
-//                               ),
-//                               onPressed: () {}),
-//                         ),
-//                         SizedBox(
-//                           height: 15,
-//                         ),
-//                         Text(model.name),
-//                         Row(
-//                           mainAxisAlignment: MainAxisAlignment.center,
-//                           children: [
-//                             Padding(
-//                               padding: const EdgeInsets.all(8.0),
-//                               child: Container(
-//                                   width: 50,
-//                                   decoration: BoxDecoration(
-//                                     color: kPrimaryColor,
-//                                     borderRadius: BorderRadius.only(
-//                                       topRight: Radius.circular(10),
-//                                       bottomRight: Radius.circular(10),
-//                                       bottomLeft: Radius.circular(10),
-//                                       topLeft: Radius.circular(10),
-//                                     ),
-//                                     border: Border.all(
-//                                       width: 1,
-//                                       color: kPrimaryColor,
-//                                       style: BorderStyle.solid,
-//                                     ),
-//                                     // shape: BoxShape.circle,
-//                                   ),
-//                                   child: Center(
-//                                       child: Text(
-//                                     "عضو",
-//                                     style: TextStyle(
-//                                         color: Colors.white, fontSize: 12),
-//                                   ))),
-//                             ),
-//                             SizedBox(
-//                               width: 10,
-//                             ),
-//                             Text(
-//                               'ID:${model.userId}',
-//                               style: TextStyle(color: Colors.grey),
-//                             ),
-//                             SizedBox(
-//                               width: 10,
-//                             ),
-//                             Text(
-//                               'LV.39',
-//                               style: TextStyle(
-//                                   color: kPrimaryColor,
-//                                   fontWeight: FontWeight.bold),
-//                             ),
-//                           ],
-//                         ),
-//                         Spacer(),
-//                         Padding(
-//                           padding: const EdgeInsets.all(20.0),
-//                           child: Row(
-//                             mainAxisAlignment: MainAxisAlignment.center,
-//                             children: [
-//                               Column(
-//                                 children: [
-//                                   MaterialButton(
-//                                     onPressed: () {
-//                                       //  HomeCubit.get(context).sendgift(id: roomID, type: type, received: received)
-//                                     },
-//                                     color: Colors.blueAccent,
-//                                     textColor: Colors.white,
-//                                     child: Icon(
-//                                       Icons.card_giftcard,
-//                                       size: 14,
-//                                     ),
-//                                     padding: EdgeInsets.all(16),
-//                                     shape: CircleBorder(),
-//                                   ),
-//                                   Text(
-//                                     'إرسال هديه',
-//                                     style: TextStyle(color: Colors.grey),
-//                                   )
-//                                 ],
-//                               ),
-//                               SizedBox(
-//                                 width: 40,
-//                               ),
-//                               Column(
-//                                 children: [
-//                                   MaterialButton(
-//                                     onPressed: () {},
-//                                     color: Colors.pink,
-//                                     textColor: Colors.white,
-//                                     child: Icon(
-//                                       Icons.star,
-//                                       size: 14,
-//                                     ),
-//                                     padding: EdgeInsets.all(16),
-//                                     shape: CircleBorder(),
-//                                   ),
-//                                   Text(
-//                                     'البطاقات السحرية',
-//                                     style: TextStyle(color: Colors.grey),
-//                                   )
-//                                 ],
-//                               ),
-//                               SizedBox(
-//                                 width: 40,
-//                               ),
-//                               Column(
-//                                 children: [
-//                                   MaterialButton(
-//                                     onPressed: () {},
-//                                     color: Colors.yellow,
-//                                     textColor: Colors.white,
-//                                     child: Icon(
-//                                       Icons.person_add,
-//                                       size: 14,
-//                                     ),
-//                                     padding: EdgeInsets.all(16),
-//                                     shape: CircleBorder(),
-//                                   ),
-//                                   Text(
-//                                     'إضافه صديق',
-//                                     style: TextStyle(color: Colors.grey),
-//                                   )
-//                                 ],
-//                               ),
-//                             ],
-//                           ),
-//                         )
-//                       ],
-//                     ),
-//                   ),
-//                 );
-//               });
-//         },
-//       ),
-//     );
